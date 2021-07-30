@@ -12,15 +12,10 @@ import { useState } from "react";
 
 
 
-class BookList extends Component{
-    
-    state = {
-     
-        search: "",
-        selected:null
-    }
-    render(){
-        const {selected,search} = this.state
+const BookList=()=> {
+  const [search, setSearch] = useState('') 
+  const [selected, setSelected] = useState(null) 
+ 
         return(
             <Container>
                   <Row>
@@ -29,10 +24,9 @@ class BookList extends Component{
                                <FormControl 
                                     placeholder='Search Books'
                                     className="my-4"
-                                    type="text"
-                                    
-                                    value={this.state.value}
-                                    onChange={(e)=>this.setState({search:e.currentTarget.value.toLowerCase()})}/>
+                                    type="text"                                  
+                                    value={search}
+                                    onChange={(e)=>setSearch(e.currentTarget.value.toLowerCase())}/>
                       
                        
                 
@@ -43,16 +37,16 @@ class BookList extends Component{
                             .map(book=>
                   
                                     <Col className="col-lg-3 d-flex" key={book.asin} >
-                                    <SingleBook item={book} changeSelected={asin=> this.setState({selected:asin})}/>
+                                    <SingleBook item={book} changeSelected={asin=> setSelected(asin)}/>
                                     </Col>)
                          }    
-                        {<Comments asin={this.state.selected}/>}
-                        {<CommentForm Asin={this.state.selected}/>}
+                        {<Comments asin={selected}/>}
+                        {<CommentForm Asin={selected}/>}
              
          </Row>
      </Container>
         )
-    }
+    
 }
 
 export default BookList

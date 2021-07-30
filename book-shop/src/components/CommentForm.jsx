@@ -1,38 +1,34 @@
 import { Component } from "react";
 import{Container,Row,Col,Form,Button} from 'react-bootstrap'
 import {withRouter} from 'react-router-dom'
+import { useState } from "react";
 
  
 
-class CommentForm extends Component{
-    state = {
-        collection:{
-            comment:'',
-            rate:1,
-            elementId: this.props.Asin
-        }
-    }
+const CommentForm =({Asin})=> {
+    const [collection, setCollection] = useState({comment:'',rate:1,elementId:Asin})
 
-    handleInput = (key,value)=>{
-        this.setState({
-            collection:{
-                ...this.state.collection,
+    const handleInput = (key,value)=>{
+        setCollection({
+           
+                ...collection,
                 [key]:value
-    }
+    
         })
     }
-    submitComment = async(e)=>{
+    const submitComment = async(e)=>{
           e.preventDefault()
           try {
               let response = await fetch('https://striveschool-api.herokuapp.com/api/comments/',{
                   method:'POST',
-                  body:JSON.stringify(this.state.collection),
+                  body:JSON.stringify(collection),
                   headers:{
                       "Content-Type":'application/json',
                       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGU2ZTg4NzE1ODFjMzAwMTUzNmI1MDciLCJpYXQiOjE2MjU3NDU1NDMsImV4cCI6MTYyNjk1NTE0M30.lLm8P6JbqRK-l2zbSN_SYDhgHrTeYpRz02skYuZHTZ4"}
               })
               if(response.ok){
                   alert('comment added')
+                //   setCollection({comment:'',rate:1,elementId:''})
                 //   this.setState({
                 //       collection:{
                 //           comment:'',
@@ -50,13 +46,13 @@ class CommentForm extends Component{
 
   
     
-    render(){
+
         return(
         <Container>
             <Row className="justify-content-center my-3">
                 <Col md={6} className="text-center">
                     <p>comment and rate Book</p>
-                    <Form onSubmit={this.submitComment}>
+                    <Form onSubmit={submitComment}>
                         <Form.Group>
 
                             <Form.Label>comment Section</Form.Label>
@@ -65,13 +61,13 @@ class CommentForm extends Component{
                              type="textArea" 
                               placeholder="write comment" 
 
-                              value={this.state.collection.comment}
-                              onChange={(e)=>{this.handleInput('comment',e.currentTarget.value)}}
+                              value={collection.comment}
+                              onChange={(e)=>{handleInput('comment',e.currentTarget.value)}}
                               />
                        </Form.Group>               
              <Form.Control as="select" size="sm" custom  
                      
-                            value={this.state.collection.rate}
+                            value={collection.rate}
                             onChange={(e)=>{this.handleInput('rate',e.target.value)}}>
                          <option>1</option>
                          <option>2</option>
@@ -86,7 +82,7 @@ class CommentForm extends Component{
             </Row>
     </Container>
         )
-    }
+  
 }
 
 export default withRouter(CommentForm) 
