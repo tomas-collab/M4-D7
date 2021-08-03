@@ -68,7 +68,7 @@ const CommentForm =({Asin})=> {
              <Form.Control as="select" size="sm" custom  
                      
                             value={collection.rate}
-                            onChange={(e)=>{this.handleInput('rate',e.target.value)}}>
+                            onChange={(e)=>{handleInput('rate',e.target.value)}}>
                          <option>1</option>
                          <option>2</option>
                          <option>3</option>

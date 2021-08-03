@@ -32,7 +32,6 @@ const Comments =()=>{
 useEffect(() => {
     getComment()
 }, [])
-
 const getComment = async()=>{
  
        try {
@@ -51,6 +50,7 @@ const getComment = async()=>{
            
        }
 }
+
 
 
         return(
